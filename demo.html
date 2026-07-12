@@ -1,0 +1,237 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Servandi — Never Miss a Job (Live Demo)</title>
+<style>
+  :root{
+    --ink:#0f172a; --muted:#64748b; --line:#e2e8f0; --bg:#f1f5f9;
+    --brand:#0ea5e9; --brand-dark:#0369a1; --accent:#14b8a6;
+    --biz:#eef2f7; --cust:#0ea5e9; --ok:#16a34a;
+  }
+  *{box-sizing:border-box}
+  body{
+    margin:0; font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;
+    color:var(--ink); background:linear-gradient(180deg,#e0f2fe 0%,#f1f5f9 40%,#f8fafc 100%);
+    line-height:1.5; -webkit-font-smoothing:antialiased;
+  }
+  .wrap{max-width:960px; margin:0 auto; padding:32px 20px 64px}
+  .badge{display:inline-flex;align-items:center;gap:6px;background:#fff;border:1px solid var(--line);
+    color:var(--muted);font-size:12px;font-weight:600;padding:5px 11px;border-radius:999px;letter-spacing:.02em}
+  .dot{width:7px;height:7px;border-radius:50%;background:var(--accent);animation:pulse 1.6s infinite}
+  @keyframes pulse{0%,100%{opacity:1}50%{opacity:.3}}
+  h1{font-size:clamp(26px,4.5vw,40px);line-height:1.12;margin:16px 0 10px;letter-spacing:-.02em}
+  h1 span{background:linear-gradient(90deg,var(--brand-dark),var(--accent));-webkit-background-clip:text;background-clip:text;color:transparent}
+  .sub{font-size:clamp(15px,2.2vw,18px);color:var(--muted);max-width:620px;margin:0 auto 8px}
+  .center{text-align:center}
+  .stage{display:grid;grid-template-columns:1fr;gap:28px;margin-top:34px;align-items:start}
+  @media(min-width:820px){.stage{grid-template-columns:360px 1fr;gap:40px}}
+
+  /* Phone */
+  .phone{width:100%;max-width:360px;margin:0 auto;background:#0b1220;border-radius:38px;padding:12px;
+    box-shadow:0 30px 60px -20px rgba(2,32,71,.45),0 0 0 1px rgba(255,255,255,.04) inset}
+  .screen{background:#f5f7fb;border-radius:28px;overflow:hidden;height:600px;display:flex;flex-direction:column;position:relative}
+  .nbar{background:#fff;border-bottom:1px solid var(--line);padding:14px 16px 12px;display:flex;align-items:center;gap:11px}
+  .avatar{width:38px;height:38px;border-radius:50%;background:linear-gradient(135deg,var(--brand),var(--accent));
+    display:flex;align-items:center;justify-content:center;color:#fff;font-weight:700;font-size:15px;flex-shrink:0}
+  .nbar .nm{font-weight:700;font-size:15px;line-height:1.1}
+  .nbar .st{font-size:11.5px;color:var(--ok);font-weight:600}
+  .thread{flex:1;overflow-y:auto;padding:16px 14px 8px;display:flex;flex-direction:column;gap:9px;scroll-behavior:smooth}
+  .sys{align-self:center;font-size:11.5px;color:var(--muted);background:#e7ebf1;padding:5px 12px;border-radius:999px;
+    text-align:center;max-width:88%;margin:4px 0}
+  .row{display:flex;max-width:82%}
+  .row.biz{align-self:flex-start}
+  .row.cust{align-self:flex-end;justify-content:flex-end}
+  .bubble{padding:9px 13px;border-radius:18px;font-size:14.3px;box-shadow:0 1px 1px rgba(15,23,42,.05)}
+  .biz .bubble{background:#fff;border:1px solid var(--line);border-bottom-left-radius:5px}
+  .cust .bubble{background:var(--cust);color:#fff;border-bottom-right-radius:5px}
+  .typing .bubble{display:flex;gap:4px;padding:12px 14px}
+  .typing i{width:7px;height:7px;border-radius:50%;background:#c3ccd8;display:inline-block;animation:bob 1.2s infinite}
+  .typing i:nth-child(2){animation-delay:.18s}.typing i:nth-child(3){animation-delay:.36s}
+  @keyframes bob{0%,60%,100%{transform:translateY(0);opacity:.5}30%{transform:translateY(-5px);opacity:1}}
+  .choices{padding:10px 14px 16px;background:linear-gradient(180deg,rgba(245,247,251,0),#f5f7fb 30%);
+    display:flex;flex-wrap:wrap;gap:8px;justify-content:flex-end}
+  .choice{background:#fff;border:1.5px solid var(--brand);color:var(--brand-dark);font-weight:600;font-size:13px;
+    padding:8px 13px;border-radius:999px;cursor:pointer;transition:.15s}
+  .choice:hover{background:var(--brand);color:#fff;transform:translateY(-1px)}
+  .restart{position:absolute;top:12px;right:14px;background:rgba(255,255,255,.9);border:1px solid var(--line);
+    border-radius:999px;font-size:11px;font-weight:600;color:var(--muted);padding:4px 10px;cursor:pointer;display:none}
+
+  /* Right column */
+  .panel h2{font-size:22px;margin:2px 0 6px;letter-spacing:-.01em}
+  .panel p.lead{color:var(--muted);margin:0 0 18px}
+  .mods{display:flex;flex-direction:column;gap:12px}
+  .mod{display:flex;gap:13px;align-items:flex-start;background:#fff;border:1px solid var(--line);
+    border-radius:14px;padding:13px 15px}
+  .mod .ic{width:34px;height:34px;border-radius:9px;flex-shrink:0;display:flex;align-items:center;justify-content:center;
+    font-size:17px;background:#e0f2fe}
+  .mod b{font-size:14.5px}.mod div small{color:var(--muted);font-size:12.7px;display:block;margin-top:1px}
+  .stat{margin-top:20px;background:linear-gradient(135deg,#0369a1,#14b8a6);color:#fff;border-radius:16px;padding:18px 20px}
+  .stat .big{font-size:27px;font-weight:800;letter-spacing:-.02em}
+  .stat small{opacity:.9;font-size:13px}
+
+  .cta{margin-top:40px;background:#0b1220;border-radius:22px;padding:34px 26px;text-align:center;color:#fff;
+    box-shadow:0 24px 50px -24px rgba(2,32,71,.5)}
+  .cta h3{font-size:clamp(20px,3vw,27px);margin:0 0 8px;letter-spacing:-.01em}
+  .cta p{color:#9fb3c8;margin:0 auto 20px;max-width:520px;font-size:15px}
+  .btn{display:inline-block;background:linear-gradient(90deg,var(--brand),var(--accent));color:#fff;font-weight:700;
+    font-size:16px;padding:14px 30px;border-radius:999px;text-decoration:none;box-shadow:0 10px 24px -8px rgba(14,165,233,.7)}
+  .cred{margin-top:22px;font-size:13px;color:var(--muted);text-align:center;line-height:1.7}
+  .cred b{color:var(--ink)}
+  .foot{margin-top:8px;font-size:11.5px;color:#94a3b8;text-align:center}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <div class="center">
+    <span class="badge"><span class="dot"></span> SERVANDI · INTERACTIVE DEMO</span>
+    <h1>Every missed call is a <span>lost job.</span><br>Here's how we catch them all.</h1>
+    <p class="sub">This is exactly what <b>your</b> customer experiences the second they can't reach you — answered, qualified, and booked automatically, 24/7. <b>Tap the blue buttons</b> to play the customer.</p>
+  </div>
+
+  <div class="stage">
+    <!-- Phone -->
+    <div class="phone">
+      <div class="screen">
+        <button class="restart" id="restart">↻ Replay</button>
+        <div class="nbar">
+          <div class="avatar">CA</div>
+          <div>
+            <div class="nm">CoolAir HVAC</div>
+            <div class="st">● Answers in seconds</div>
+          </div>
+        </div>
+        <div class="thread" id="thread"></div>
+        <div class="choices" id="choices"></div>
+      </div>
+    </div>
+
+    <!-- Explanation -->
+    <div class="panel">
+      <h2>What just happened (automatically)</h2>
+      <p class="lead">No staff. No app for the customer. No lead left waiting. Here's the system working behind that text thread:</p>
+      <div class="mods">
+        <div class="mod"><div class="ic">📞</div><div><b>Missed-Call Text-Back</b><small>The instant a call goes unanswered, an AI text goes out — before they call a competitor.</small></div></div>
+        <div class="mod"><div class="ic">⚡</div><div><b>Speed-to-Lead AI</b><small>Replies in seconds and qualifies the job — responding in 5 min vs 30 makes you ~100× more likely to win it.</small></div></div>
+        <div class="mod"><div class="ic">📅</div><div><b>Auto Booking</b><small>Puts the qualified job straight onto your calendar — day or night.</small></div></div>
+        <div class="mod"><div class="ic">⭐</div><div><b>Review Engine</b><small>After the visit, it asks happy customers for a 5-star Google review — more reviews, more calls.</small></div></div>
+        <div class="mod"><div class="ic">🔁</div><div><b>Database Reactivation</b><small>Re-engages old leads and past customers to pull new jobs from a list you already own.</small></div></div>
+      </div>
+      <div class="stat">
+        <div class="big">$50k–$200k / year</div>
+        <small>is what an average home-service business loses to missed calls and slow replies. This system is built to win that money back.</small>
+      </div>
+    </div>
+  </div>
+
+  <!-- CTA -->
+  <div class="cta">
+    <h3>Want this running for your business?</h3>
+    <p>I'll set up your own "Never Miss a Job" system — live in about a week — so you stop paying for leads that slip away.</p>
+    <a class="btn" href="#" id="ctaBtn">Book a free 15-min demo call →</a>
+  </div>
+  <div class="cred">
+    Powered by <b>Servandi</b> — the AI front desk for home-service businesses<br>
+    Built by an AI &amp; Automation Engineer · M.Sc. Artificial Intelligence · AWS Machine Learning – Specialty
+  </div>
+  <div class="foot">Demo conversation is a simulation for illustration. Your live system uses real SMS, your calendar, and your business info.</div>
+</div>
+
+<script>
+(function(){
+  var thread=document.getElementById('thread'),
+      choicesEl=document.getElementById('choices'),
+      restartBtn=document.getElementById('restart');
+
+  // Conversation flow. Each step: {who, text} OR {sys} OR {choices:[{label, branch}]}
+  var flows={
+    start:[
+      {sys:"📞 7:42 PM — Missed call from a new number"},
+      {who:'biz', text:"Hey, this is CoolAir HVAC 👋 So sorry we missed your call! I can help you right here by text. What's going on?"},
+      {choices:[
+        {label:"AC stopped cooling", branch:'cool'},
+        {label:"Need a quote for a new unit", branch:'quote'},
+        {label:"No cold air — it's urgent!", branch:'urgent'}
+      ]}
+    ],
+    cool:[
+      {who:'cust', text:"My AC stopped cooling this afternoon 😓"},
+      {who:'biz', text:"Ugh, in this heat that's the worst — let's get a tech out fast. What's your zip code so I can confirm we cover you?"},
+      {choices:[{label:"It's 78701", branch:'zip'}]}
+    ],
+    quote:[
+      {who:'cust', text:"Looking for a quote on a new AC unit for a 3-bed house"},
+      {who:'biz', text:"Happy to help! A comfort advisor can measure and give you an exact quote (free). What's your zip code?"},
+      {choices:[{label:"It's 78701", branch:'zip'}]}
+    ],
+    urgent:[
+      {who:'cust', text:"No cold air at all and my baby's home 😟 need someone ASAP"},
+      {who:'biz', text:"I've got you — flagging this as priority right now. What's your zip so I can send the nearest available tech?"},
+      {choices:[{label:"It's 78701", branch:'zip'}]}
+    ],
+    zip:[
+      {who:'biz', text:"Perfect — we cover 78701 ✅ I have two openings: today 4–6 PM, or tomorrow 9–11 AM. Which works better?"},
+      {choices:[
+        {label:"Today 4–6 PM please", branch:'book'},
+        {label:"Tomorrow 9–11 AM", branch:'book'}
+      ]}
+    ],
+    book:[
+      {who:'cust', text:"That works, thank you!"},
+      {who:'biz', text:"You're all set 🎉 I've booked your appointment and texted you a confirmation. Your tech will call ~30 min before arrival. Anything else?"},
+      {who:'cust', text:"Nope, that was easy. Appreciate it!"},
+      {sys:"✅ Lead captured & job booked in 51 seconds — with zero staff involved."},
+      {done:true}
+    ]
+  };
+
+  var timers=[];
+  function clearTimers(){timers.forEach(clearTimeout);timers=[];}
+  function el(cls,html){var d=document.createElement('div');d.className=cls;if(html!=null)d.innerHTML=html;return d;}
+  function scroll(){thread.scrollTop=thread.scrollHeight;}
+
+  function addSys(t){thread.appendChild(el('sys',t));scroll();}
+  function addMsg(who,t){
+    var r=el('row '+who),b=el('bubble',t);r.appendChild(b);thread.appendChild(r);scroll();
+  }
+  function typing(who){
+    var r=el('row '+who+' typing');r.innerHTML='<div class="bubble"><i></i><i></i><i></i></div>';
+    thread.appendChild(r);scroll();return r;
+  }
+  function showChoices(list){
+    choicesEl.innerHTML='';
+    list.forEach(function(c){
+      var btn=el('choice',c.label);
+      btn.onclick=function(){choicesEl.innerHTML='';run(flows[c.branch]);};
+      choicesEl.appendChild(btn);
+    });
+  }
+
+  function run(steps,i){
+    i=i||0;
+    if(i>=steps.length) return;
+    var step=steps[i], delay=520;
+    if(step.sys){ addSys(step.sys); timers.push(setTimeout(function(){run(steps,i+1);},700)); return; }
+    if(step.choices){ showChoices(step.choices); return; }
+    if(step.done){ restartBtn.style.display='block'; return; }
+    // message with typing indicator
+    var t=typing(step.who);
+    timers.push(setTimeout(function(){
+      thread.removeChild(t); addMsg(step.who, step.text);
+      timers.push(setTimeout(function(){run(steps,i+1);}, step.who==='cust'?360:640));
+    }, step.who==='cust'?420:900));
+  }
+
+  function start(){
+    clearTimers(); thread.innerHTML=''; choicesEl.innerHTML=''; restartBtn.style.display='none';
+    timers.push(setTimeout(function(){run(flows.start);},300));
+  }
+  restartBtn.onclick=start;
+  document.getElementById('ctaBtn').onclick=function(e){e.preventDefault();
+    this.textContent="This button becomes your real booking link ✔"; };
+  start();
+})();
+</script>
+</body>
+</html>
