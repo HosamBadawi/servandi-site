@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Servandi — Never Miss a Job (Live Demo)</title>
+<title>Servandi, Never Miss a Job (Live Demo)</title>
 <style>
   :root{
     --ink:#0f172a; --muted:#64748b; --line:#e2e8f0; --bg:#f1f5f9;
@@ -87,7 +87,7 @@
   <div class="center">
     <span class="badge"><span class="dot"></span> SERVANDI · INTERACTIVE DEMO</span>
     <h1>Every missed call is a <span>lost job.</span><br>Here's how we catch them all.</h1>
-    <p class="sub">This is exactly what <b>your</b> customer experiences the second they can't reach you — answered, qualified, and booked automatically, 24/7. <b>Tap the blue buttons</b> to play the customer.</p>
+    <p class="sub">This is exactly what <b>your</b> customer experiences the second they can't reach you, answered, qualified, and booked automatically, 24/7. <b>Tap the blue buttons</b> to play the customer.</p>
   </div>
 
   <div class="stage">
@@ -112,14 +112,14 @@
       <h2>What just happened (automatically)</h2>
       <p class="lead">No staff. No app for the customer. No lead left waiting. Here's the system working behind that text thread:</p>
       <div class="mods">
-        <div class="mod"><div class="ic">📞</div><div><b>Missed-Call Text-Back</b><small>The instant a call goes unanswered, an AI text goes out — before they call a competitor.</small></div></div>
-        <div class="mod"><div class="ic">⚡</div><div><b>Speed-to-Lead AI</b><small>Replies in seconds and qualifies the job — responding in 5 min vs 30 makes you ~100× more likely to win it.</small></div></div>
-        <div class="mod"><div class="ic">📅</div><div><b>Auto Booking</b><small>Puts the qualified job straight onto your calendar — day or night.</small></div></div>
-        <div class="mod"><div class="ic">⭐</div><div><b>Review Engine</b><small>After the visit, it asks happy customers for a 5-star Google review — more reviews, more calls.</small></div></div>
+        <div class="mod"><div class="ic">📞</div><div><b>Missed-Call Text-Back</b><small>The instant a call goes unanswered, an AI text goes out, before they call a competitor.</small></div></div>
+        <div class="mod"><div class="ic">⚡</div><div><b>Speed-to-Lead AI</b><small>Replies in seconds and qualifies the job, responding in 5 min vs 30 makes you ~100× more likely to win it.</small></div></div>
+        <div class="mod"><div class="ic">📅</div><div><b>Auto Booking</b><small>Puts the qualified job straight onto your calendar, day or night.</small></div></div>
+        <div class="mod"><div class="ic">⭐</div><div><b>Review Engine</b><small>After the visit, it asks happy customers for a 5-star Google review, more reviews, more calls.</small></div></div>
         <div class="mod"><div class="ic">🔁</div><div><b>Database Reactivation</b><small>Re-engages old leads and past customers to pull new jobs from a list you already own.</small></div></div>
       </div>
       <div class="stat">
-        <div class="big">$50k–$200k / year</div>
+        <div class="big">$50k-$200k / year</div>
         <small>is what an average home-service business loses to missed calls and slow replies. This system is built to win that money back.</small>
       </div>
     </div>
@@ -128,12 +128,11 @@
   <!-- CTA -->
   <div class="cta">
     <h3>Want this running for your business?</h3>
-    <p>I'll set up your own "Never Miss a Job" system — live in about a week — so you stop paying for leads that slip away.</p>
+    <p>We'll set up your own "Never Miss a Job" system, live in about a week, so you stop paying for leads that slip away.</p>
     <a class="btn" href="#" id="ctaBtn">Book a free 15-min demo call →</a>
   </div>
   <div class="cred">
-    Powered by <b>Servandi</b> — the AI front desk for home-service businesses<br>
-    Built by an AI &amp; Automation Engineer · M.Sc. Artificial Intelligence · AWS Machine Learning – Specialty
+    Powered by <b>Servandi</b>, the AI front desk for home-service businesses
   </div>
   <div class="foot">Demo conversation is a simulation for illustration. Your live system uses real SMS, your calendar, and your business info.</div>
 </div>
@@ -147,17 +146,17 @@
   // Conversation flow. Each step: {who, text} OR {sys} OR {choices:[{label, branch}]}
   var flows={
     start:[
-      {sys:"📞 7:42 PM — Missed call from a new number"},
+      {sys:"📞 7:42 PM, Missed call from a new number"},
       {who:'biz', text:"Hey, this is CoolAir HVAC 👋 So sorry we missed your call! I can help you right here by text. What's going on?"},
       {choices:[
         {label:"AC stopped cooling", branch:'cool'},
         {label:"Need a quote for a new unit", branch:'quote'},
-        {label:"No cold air — it's urgent!", branch:'urgent'}
+        {label:"No cold air, it's urgent!", branch:'urgent'}
       ]}
     ],
     cool:[
       {who:'cust', text:"My AC stopped cooling this afternoon 😓"},
-      {who:'biz', text:"Ugh, in this heat that's the worst — let's get a tech out fast. What's your zip code so I can confirm we cover you?"},
+      {who:'biz', text:"Ugh, in this heat that's the worst, let's get a tech out fast. What's your zip code so I can confirm we cover you?"},
       {choices:[{label:"It's 78701", branch:'zip'}]}
     ],
     quote:[
@@ -167,21 +166,21 @@
     ],
     urgent:[
       {who:'cust', text:"No cold air at all and my baby's home 😟 need someone ASAP"},
-      {who:'biz', text:"I've got you — flagging this as priority right now. What's your zip so I can send the nearest available tech?"},
+      {who:'biz', text:"I've got you, flagging this as priority right now. What's your zip so I can send the nearest available tech?"},
       {choices:[{label:"It's 78701", branch:'zip'}]}
     ],
     zip:[
-      {who:'biz', text:"Perfect — we cover 78701 ✅ I have two openings: today 4–6 PM, or tomorrow 9–11 AM. Which works better?"},
+      {who:'biz', text:"Perfect, we cover 78701 ✅ I have two openings: today 4-6 PM, or tomorrow 9-11 AM. Which works better?"},
       {choices:[
-        {label:"Today 4–6 PM please", branch:'book'},
-        {label:"Tomorrow 9–11 AM", branch:'book'}
+        {label:"Today 4-6 PM please", branch:'book'},
+        {label:"Tomorrow 9-11 AM", branch:'book'}
       ]}
     ],
     book:[
       {who:'cust', text:"That works, thank you!"},
       {who:'biz', text:"You're all set 🎉 I've booked your appointment and texted you a confirmation. Your tech will call ~30 min before arrival. Anything else?"},
       {who:'cust', text:"Nope, that was easy. Appreciate it!"},
-      {sys:"✅ Lead captured & job booked in 51 seconds — with zero staff involved."},
+      {sys:"✅ Lead captured & job booked in 51 seconds, with zero staff involved."},
       {done:true}
     ]
   };
